@@ -1,0 +1,1 @@
+- Renaming Configuration sections
