@@ -1,4 +1,4 @@
-package michalec.connor.dragonsplus;
+package michalec.connor.arcticcrates;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 //Unfortunately java does not have type specialization so Generic templates cannot be used like in c++
 
@@ -28,6 +29,50 @@ public class DataHandler {
 	
 	public void addFile(String nameID, String filePath) {
 		files.put(nameID, new File(filePath)); //Add new file to file path hashmap
+	}
+	
+	public void update(String nameID) {
+		this.saveYAML(nameID); //save file
+		this.loadFileYAML(nameID); //reload cache
+	}
+	
+	//Update all the files
+	public void update() {
+		for(String nameID : files.keySet()) {
+			this.saveYAML(nameID); //save file
+			this.loadFileYAML(nameID); //reload cache
+		}
+	}
+	
+	public void initializeScheduledUpdate(int waitTicks, String nameID) {
+		
+		new BukkitRunnable() {
+			@Override
+		    public void run() { 
+				DataHandler.this.saveYAML(nameID); //save file
+				DataHandler.this.loadFileYAML(nameID); //reload cache
+					
+				//repeat:
+				DataHandler.this.initializeScheduledUpdate(waitTicks, nameID);
+			}
+		}.runTaskLater(plugin, waitTicks);   
+	}
+	
+	//schedule update all the files
+	public void initializeScheduledUpdate(int waitTicks) {
+		
+		new BukkitRunnable() {
+			@Override
+		    public void run() { 
+				for(String nameID : files.keySet()) {
+					DataHandler.this.saveYAML(nameID); //save file
+					DataHandler.this.loadFileYAML(nameID); //reload cache
+				}
+				
+				//repeat:
+				DataHandler.this.initializeScheduledUpdate(waitTicks);
+			}
+		}.runTaskLater(plugin, waitTicks);   
 	}
 	
 	//Load a specific added file's yaml data
@@ -60,25 +105,19 @@ public class DataHandler {
 	
 	
 	//SET(yaml):
-	public void setYAMLField(String nameID, String YAMLpath, String value) {
+	public void setYAMLStringField(String nameID, String YAMLpath, String value) {
 		YAMLData.get(nameID).set(YAMLpath, value);
-		this.saveYAML(nameID); //save file
-		this.loadFileYAML(nameID); //reload cache
 	}
 	
-	public void setYAMLField(String nameID, String YAMLpath, Boolean value) {
+	public void setYAMLBooleanField(String nameID, String YAMLpath, Boolean value) {
 		YAMLData.get(nameID).set(YAMLpath, value);
-		this.saveYAML(nameID); //save file
-		this.loadFileYAML(nameID); //reload cache
 	}
 	
-	public void setYAMLField(String nameID, String YAMLpath, Integer value) {
+	public void setYAMLIntegerField(String nameID, String YAMLpath, Integer value) {
 		YAMLData.get(nameID).set(YAMLpath, value);
-		this.saveYAML(nameID); //save file
-		this.loadFileYAML(nameID); //reload cache
 	}
 	
-	public void setYAMLField(String nameID, String YAMLpath, List<?> value) { 	
+	public void setYAMLListField(String nameID, String YAMLpath, List<?> value) { 	
 		YAMLData.get(nameID).set(YAMLpath, value);
 		this.saveYAML(nameID); //save file
 		this.loadFileYAML(nameID); //reload cache
@@ -112,8 +151,6 @@ public class DataHandler {
 	//DELETE(yaml):
 	public void deleteYAMLPath(String nameID, String YAMLpath) {
 		YAMLData.get(nameID).set(YAMLpath, null);
-		this.saveYAML(nameID); //save file
-		this.loadFileYAML(nameID); //reload cache
 	}
 	
 	//UTILITY, does not require you to add the file first
