@@ -3,5 +3,5 @@ It will refrain from reading or writing to the file until **DataHandler.update(*
 
 **DataHandler.initializeScheduledUpdate(*ticks*, *[Optional: NameID]*)** will allow you to automatically update the file every certain amount of ticks
 
+Also check out the bungeecord branch!
 
-PLEASE NOTE: The BungeeCord branch has not been updated yet
