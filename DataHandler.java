@@ -42,7 +42,7 @@ public class DataHandler {
 		}
 	}
 	
-	public void initializeScheduledUpdate(int waitTicks, String nameID) {
+	public void initializeScheduledUpdate(final int waitTicks, final String nameID) {
 		
 		new BukkitRunnable() {
 			@Override
@@ -57,7 +57,7 @@ public class DataHandler {
 	}
 	
 	//schedule update all the files
-	public void initializeScheduledUpdate(int waitTicks) {
+	public void initializeScheduledUpdate(final int waitTicks) {
 		
 		new BukkitRunnable() {
 			@Override
