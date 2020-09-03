@@ -1,11 +1,11 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
-
+import java.util.concurrent.TimeUnit;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -37,7 +37,6 @@ public class DataHandler {
 		this.loadFileYAML(nameID); //reload cache
 	}
 	
-	
 	//Update all the files
 	public void update() {
 		for(String nameID : files.keySet()) {
@@ -46,38 +45,35 @@ public class DataHandler {
 		}
 	}
 	
-	/*
-	public void initializeScheduledUpdate(int waitTicks, String nameID) {
+	public void initializeScheduledUpdate(final int waitSeconds, final String nameID) {
 		
-		new BukkitRunnable() {
+		plugin.getProxy().getScheduler().schedule(plugin, new Runnable() {
 			@Override
-		    public void run() { 
+			public void run() {
 				DataHandler.this.saveYAML(nameID); //save file
 				DataHandler.this.loadFileYAML(nameID); //reload cache
 					
 				//repeat:
-				DataHandler.this.initializeScheduledUpdate(waitTicks, nameID);
+				DataHandler.this.initializeScheduledUpdate(waitSeconds, nameID);
 			}
-		}.runTaskLater(plugin, waitTicks);   
-	}*/
+		}, waitSeconds, TimeUnit.SECONDS);
+	}
 	
-	/*
 	//schedule update all the files
-	public void initializeScheduledUpdate(int waitTicks) {
-		
-		new BukkitRunnable() {
+	public void initializeScheduledUpdate(final int waitSeconds) {
+		plugin.getProxy().getScheduler().schedule(plugin, new Runnable() {
 			@Override
-		    public void run() { 
+			public void run() {
 				for(String nameID : files.keySet()) {
 					DataHandler.this.saveYAML(nameID); //save file
 					DataHandler.this.loadFileYAML(nameID); //reload cache
 				}
-				
+					
 				//repeat:
-				DataHandler.this.initializeScheduledUpdate(waitTicks);
+				DataHandler.this.initializeScheduledUpdate(waitSeconds);
 			}
-		}.runTaskLater(plugin, waitTicks);   
-	}*/
+		}, waitSeconds, TimeUnit.SECONDS);
+	}
 	
 	//Load a specific added file's yaml data
 	public boolean loadFileYAML(String nameID) {
