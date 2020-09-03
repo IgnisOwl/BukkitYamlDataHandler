@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 
 import net.md_5.bungee.api.plugin.Plugin;
@@ -147,7 +148,16 @@ public class DataHandler {
 	
 	//GET more(yaml):
 	public Collection<String> getConfigurationSections(String nameID, String YAMLpath) {
-		return(YAMLData.get(nameID).getSection(YAMLpath).getKeys());
+		Collection<String> res = new ArrayList<String>();
+
+		try {
+			res = YAMLData.get(nameID).getSection(YAMLpath).getKeys();
+		}
+		catch(NullPointerException e) {
+			//None was found
+		}
+
+		return(res);
 	}
 	
 	//DELETE(yaml):
