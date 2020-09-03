@@ -140,10 +140,29 @@ public class DataHandler {
 	
 	//GET more(yaml):
 	public Set<String> getConfigurationSections(String nameID, String YAMLpath) {
-		return(YAMLData.get(nameID).getConfigurationSection(YAMLpath).getKeys(false));
+		Set<String> res = new HashSet<String>(); //empty
+
+		try {
+			res = YAMLData.get(nameID).getConfigurationSection(YAMLpath).getKeys(false);
+		}
+		catch(NullPointerException e) {
+			//None was found
+		}
+		
+		return(res);
 	}
+	
 	public Set<String> getConfigurationSections(String nameID, String YAMLpath, Boolean deep) { //overloaded method for deep search
-		return(YAMLData.get(nameID).getConfigurationSection(YAMLpath).getKeys(deep));
+		Set<String> res = new HashSet<String>(); //empty
+
+		try {
+			res = YAMLData.get(nameID).getConfigurationSection(YAMLpath).getKeys(deep);
+		}
+		catch(NullPointerException e) {
+			//None was found
+		}
+		
+		return(res);
 	}
 	
 	//DELETE(yaml):
