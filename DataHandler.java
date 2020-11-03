@@ -138,6 +138,10 @@ public class DataHandler {
 		return (Integer) (YAMLData.get(nameID).getInt(YAMLpath));
 	}
 	
+	public Double getYAMLDoubleField(String nameID, String YAMLpath) {
+		return (double) (YAMLData.get(nameID).getDouble(YAMLpath));
+	}
+	
 	public List<?> getYAMLListField(String nameID, String YAMLpath) {
 		return(YAMLData.get(nameID).getList(YAMLpath)); //? wildcard, we don't know the type of list, use cast
 	}
