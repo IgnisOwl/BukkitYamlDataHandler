@@ -121,6 +121,10 @@ public class DataHandler {
 		YAMLData.get(nameID).set(YAMLpath, value);
 	}
 	
+	public void setYAMLField(String nameID, String YAMLpath, Double value) {
+		YAMLData.get(nameID).set(YAMLpath, value);
+	}
+	
 	public void setYAMLField(String nameID, String YAMLpath, List<?> value) { 	
 		YAMLData.get(nameID).set(YAMLpath, value);
 	}
