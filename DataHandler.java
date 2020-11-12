@@ -116,6 +116,10 @@ public class DataHandler {
 		YAMLData.get(nameID).set(YAMLpath, value);
 	}
 	
+	public void setYAMLIntegerField(String nameID, String YAMLpath, Double value) {
+		YAMLData.get(nameID).set(YAMLpath, value);
+	}
+	
 	public void setYAMLListField(String nameID, String YAMLpath, List<?> value) { 	
 		YAMLData.get(nameID).set(YAMLpath, value);
 		this.saveYAML(nameID); //save file
