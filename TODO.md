@@ -1,1 +1,2 @@
 - Renaming Configuration sections
+- Appending to list on the fly
